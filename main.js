@@ -4,7 +4,9 @@ const jq = $.noConflict(),
 title='Eloquent Javascript Exercises - Chapter 2',
 tBase=7,
 cBase=100,
-descLoopingTriangle='<p class="tw-mb-[1rem]">Write a loop that makes seven calls to console.log to output the following triangle</p>',
+bindingSize=10;
+
+let descLoopingTriangle='<p class="tw-mb-[1rem]">Write a loop that makes seven calls to console.log to output the following triangle</p>',
 descFizzBuzz='<p class="tw-mb-[1rem]">Write a program that uses console.log to print all the numbers from 1 to 100, with two exceptions. For numbers divisible by 3, print "Fizz" instead of the number, and for numbers divisible by 5 (and not 3), print "Buzz" instead.</p>' +
 '<p class="tw-mb-[1rem]">When you have that working, modify your program to print "FizzBuzz" for numbers that are divisible by both 3 and 5 (and still print "Fizz" or "Buzz" for numbers divisible by only one of those).</p>',
 descChessboard='<p class="tw-mb-[1rem]">Write a program that creates a string that represents an 8×8 grid, using newline characters to separate lines. At each position of the grid there is either a space or a "#" character. The characters should form a chessboard.</p>' +
@@ -44,6 +46,10 @@ tPattern='';
   // FizzBuzz exercise
 
   execFizzBuzz(fizzBuzz,cBase);
+
+  // Chessboard exercise
+
+  execChessboard(chessBoard,bindingSize);
 
 
 })(jq);
@@ -90,4 +96,40 @@ function execFizzBuzz(target,base){
     patternBreak+=`<span class=" tw-text-green-700">${content}${comma}</span> `;
   }
   section.innerHTML+=patternBreak;
+}
+
+function execChessboard(target,size){
+  const section=document.querySelector('#' + target.name);
+  let rows='';
+
+  for(let i=0;i<size;i++){
+    let cols='',
+    even=i%2==0?true:false;
+    console.log('even');
+    console.log(even);
+
+    for(let j=0;j<size;j++){
+      let cell=evenOdd(even,j);
+      console.log('cell');
+      console.log(cell);
+
+      cols+='<span class="tw-p-[1rem]">' + cell + '</span>';
+    }
+
+    rows+='<span class="tw-block">' + cols + '</span>';
+
+  }
+
+  section.innerHTML+='<div class="tw-mx-auto tw-w-fit tw-my-[2rem] tw-border-2 tw-p-[1rem]">' + rows + '</div>';
+
+} 
+
+function evenOdd(status,number){
+  let pattern='';
+  if(status===true){
+    pattern=number%2==0?'#':' ';
+  } else {
+    pattern=number%2==0?' ':'#';
+  }
+  return pattern;
 }
