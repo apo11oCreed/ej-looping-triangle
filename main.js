@@ -10,7 +10,28 @@ let descLoopingTriangle='<p class="tw-mb-[1rem]">Write a loop that makes seven c
 descFizzBuzz='<p class="tw-mb-[1rem]">Write a program that uses console.log to print all the numbers from 1 to 100, with two exceptions. For numbers divisible by 3, print "Fizz" instead of the number, and for numbers divisible by 5 (and not 3), print "Buzz" instead.</p>' +
 '<p class="tw-mb-[1rem]">When you have that working, modify your program to print "FizzBuzz" for numbers that are divisible by both 3 and 5 (and still print "Fizz" or "Buzz" for numbers divisible by only one of those).</p>',
 descChessboard='<p class="tw-mb-[1rem]">Write a program that creates a string that represents an 8×8 grid, using newline characters to separate lines. At each position of the grid there is either a space or a "#" character. The characters should form a chessboard.</p>' +
-'<p class="tw-mb-[1rem]">When you have a program that generates this pattern, define a binding size = 8 and change the program so that it works for any size, outputting a grid of the given width and height.</p>';;
+'<p class="tw-mb-[1rem]">When you have a program that generates this pattern, define a binding size = 8 and change the program so that it works for any size, outputting a grid of the given width and height.</p>',
+minform='<form id="miniForm">' + 
+'<fieldset>' +
+'<legend>Confirm the lowest number.</legend>' +
+'<p class="tw-mb-[1rem]">Enter two numbers below. <span class="tw-text-sm tw-font-bold"><span style="color:red">*</span> Required</span></p>' +
+'<p class="tw-mb-[1rem]">' + 
+'<label for="numOne">Number 1<span style="color:red">*</span></label>' +
+'<input class="tw-border-slate-200 tw-border-2 tw-rounded-sm" id="numOne" type="number" required />' + 
+'</p>' + 
+'<p class="tw-mb-[1rem]">' + 
+'<label for="numOne">Number 2<span style="color:red">*</span></label>' +
+'<input class="tw-border-slate-200 tw-border-2 tw-rounded-sm" id="numTwo" type="number" required />' + 
+'</p>' + 
+'<p class="tw-mb-[1rem]">' + 
+'<label for="lowestNumber" class="tw-block">Lowest Number</label>' +
+'<input class="tw-border-slate-200 tw-border-2 tw-rounded-sm" id="lowestNumber" type="text" />' + 
+'</p>' + 
+'<p class="tw-mb-[1rem]">' + 
+'<input class="tw-border-slate-200 tw-bg-slate-200 tw-p-2 tw-leading-none" type="submit" value="Submit" />' +
+'</p>' + 
+'</fieldset>' +
+'</form>';
 
 class Section {
   constructor(name,color,desc){
@@ -27,7 +48,8 @@ class Section {
 let loopingTriangle=new Section('loopingTriangle','red',descLoopingTriangle),
 fizzBuzz=new Section('fizzBuzz','blue',descFizzBuzz),
 chessBoard=new Section('chessBoard','green',descChessboard),
-exerciseArray=[loopingTriangle,fizzBuzz,chessBoard],
+miniMum=new Section('minExercise','green',minform),
+exerciseArray=[loopingTriangle,fizzBuzz,chessBoard,miniMum],
 exerciseSections,
 tPattern='';
 
@@ -51,6 +73,9 @@ tPattern='';
 
   execChessboard(chessBoard,bindingSize);
 
+  // Minimum
+  const form=document.getElementById('miniForm');
+  minimum(form);
 
 })(jq);
 
@@ -105,13 +130,9 @@ function execChessboard(target,size){
   for(let i=0;i<size;i++){
     let cols='',
     even=i%2==0?true:false;
-    console.log('even');
-    console.log(even);
 
     for(let j=0;j<size;j++){
       let cell=evenOdd(even,j);
-      console.log('cell');
-      console.log(cell);
 
       cols+='<span class="tw-p-[1rem]">' + cell + '</span>';
     }
@@ -132,4 +153,20 @@ function evenOdd(status,number){
     pattern=number%2==0?' ':'#';
   }
   return pattern;
+}
+
+function minimum(form){
+  let inputs,
+  numbers,
+  lowestNumber=form.querySelector('#lowestNumber');
+
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    inputs=Array.from(form.querySelectorAll('input[type="number"]'));
+    numbers=inputs.map(input=>{
+      return Number(input.value);
+    });
+
+    lowestNumber.setAttribute('value',Math.min(...numbers));
+  });
 }
