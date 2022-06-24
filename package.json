@@ -6,7 +6,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "dev": "vite",
-    "build": "vite build --base=/",
+    "build": "vite build --base=/ej-program-structure/",
     "preview": "vite preview"
   },
   "devDependencies": {
